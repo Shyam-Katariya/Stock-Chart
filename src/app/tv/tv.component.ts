@@ -46,8 +46,8 @@ export class TvComponent implements OnInit, OnDestroy {
 
   drawTv() {
     this.tradingview = new window.TradingView.widget({
-      // debug: true, // uncomment this line to see Library errors and warnings in the console
-      fullscreen: true,
+      debug: true, // uncomment this line to see Library errors and warnings in the console
+      // fullscreen: true,
       symbol: this.symbol,
       interval: '1',
       container_id: 'tradingview',
@@ -57,7 +57,7 @@ export class TvComponent implements OnInit, OnDestroy {
         // 'timeframes_toolbar',
         // 'go_to_date',
         // 'use_localstorage_for_settings',
-        'volume_force_overlay',
+        // 'volume_force_overlay',
         // 'show_interval_dialog_on_key_press',
         'symbol_search_hot_key',
         'study_dialog_search_control',

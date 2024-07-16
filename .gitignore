@@ -42,6 +42,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-#tradingview library
-src/assets/vendors/charting_library
