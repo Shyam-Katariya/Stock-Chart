@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MockService } from '../providers/mock.service';
 import { timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { BTC_PRICE_LIST } from '../mock/btc-181123_2006-181124_0105';
 
 @Component({
   selector: 'app-tv',
@@ -16,6 +17,9 @@ export class TvComponent implements OnInit, OnDestroy {
   ws;
   wsMessage = 'you may need to send specific message to subscribe data, eg: BTC';
 
+  /**
+   * 
+   */
   granularityMap = {
     '1': 60,
     '3': 180,
@@ -25,13 +29,17 @@ export class TvComponent implements OnInit, OnDestroy {
     '120': 60 * 60 * 2,
     '240': 60 * 60 * 4,
     '360': 60 * 60 * 6,
-    'D': 86400
+    'D': 86400,
   };
 
   constructor(private mockService: MockService) {
   }
 
   ngOnInit() {
+
+    const datalength = BTC_PRICE_LIST.length
+    console.log('datalength >>>>>>>', datalength);
+    
     this.ws = this.mockService.fakeWebSocket();
 
     this.ws.onopen = () => {
@@ -44,6 +52,10 @@ export class TvComponent implements OnInit, OnDestroy {
     this.ws.close();
   }
 
+  showdata(event:DragEvent) { 
+    console.log('event')
+  }
+
   drawTv() {
     this.tradingview = new window.TradingView.widget({
       debug: true, // uncomment this line to see Library errors and warnings in the console
@@ -54,24 +66,24 @@ export class TvComponent implements OnInit, OnDestroy {
       library_path: 'assets/vendors/charting_library/',
       locale: 'en',
       disabled_features: [
-        // 'timeframes_toolbar',
+        'timeframes_toolbar',
         // 'go_to_date',
         // 'use_localstorage_for_settings',
         // 'volume_force_overlay',
         // 'show_interval_dialog_on_key_press',
         'symbol_search_hot_key',
         'study_dialog_search_control',
-        'display_market_status',
-        /*'header_compare',
-        'header_symbol_search',
-        'header_fullscreen_button',
-        'header_settings',
-        'header_chart_type',
-        'header_resolutions',*/
+        // 'display_market_status',
+        'header_compare',
+        // 'header_symbol_search',
+        // 'header_fullscreen_button',
+        // 'header_settings',
+        // 'header_chart_type',
+        // 'header_resolutions',
         'control_bar',
         'edit_buttons_in_legend',
         'border_around_the_chart',
-        'main_series_scale_menu',
+        // 'main_series_scale_menu',
         'star_some_intervals_by_default',
         'datasource_copypaste',
         'header_indicators',

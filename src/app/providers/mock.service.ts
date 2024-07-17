@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable, Observer, interval, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BTC_PRICE_LIST } from '../mock/btc-181123_2006-181124_0105';
@@ -26,6 +26,7 @@ export class MockService {
     const obj: any = {};
     Object.assign(obj, BTC_PRICE_LIST[this.dataIndex], { time });
     ++this.dataIndex >= this.dataLength && (this.dataIndex = 0);
+    // this.dataIndex++;
     return obj;
   }
 
@@ -43,8 +44,15 @@ export class MockService {
     }
 
     return new Observable((ob: Observer<any>) => {
-      ob.next(list);
-      ob.complete();
+
+      /**
+       * this interval create smoothness
+       */
+
+      setInterval(() => {
+        ob.next(BTC_PRICE_LIST);
+        ob.complete();
+      },1e3)
     });
   }
 
@@ -83,6 +91,8 @@ export class MockService {
             const currentTimestamp = +new Date();
             if (currentTimestamp - this.lastBarTimestamp >= granularity) {
               /* time goes to next, generate new one */
+              console.log('granularity >>', granularity)
+              console.log('this.lastBarTimestamp >>>>>>',this.lastBarTimestamp);
               this.lastBarTimestamp += granularity;
               return MockService.dataGenerator(this.lastBarTimestamp);
             } else if (currentTimestamp + duration - this.lastBarTimestamp >= granularity) {

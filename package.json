@@ -24,6 +24,7 @@
     "@angular/router": "^17.3.11",
     "core-js": "^2.5.4",
     "rxjs": "~6.6.7",
+    "socket.io": "^4.7.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.14.7"
   },
